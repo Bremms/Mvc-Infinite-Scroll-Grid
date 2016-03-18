@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "ASP.NET MVC Infinite Scroll Demo";
+}
+<h1>ASP.NET MVC Infinite Scroll Demo</h1>
+<p>
+    Here's a table of data. Instead of loading all <span class="text-primary">@ViewBag.TotalNumberCustomers</span> items, let's load them only when the user calls for them.
+    This technique can be used with any HTML element that holds repeating items. This demo uses <code>&lt;table&gt;</code>, but you can use <code>&lt;div&gt;</code> or <code>&lt;ul&gt;</code> and <code>&lt;li&gt;</code> as you need.
+</p>
+
+<h2>Customer Demo</h2>
+<p>
+    This table starts off with <strong>@ViewBag.RecordsPerPage</strong> items. Scroll down on this page. You'll see that rows are added as you scroll down.
+    The app will deliver <strong>@ViewBag.RecordsPerPage </strong> items at a time, up to its max of <strong>@ViewBag.TotalNumberCustomers</strong>.
+</p>
+
+<table class="infinite-scroll  table table-striped table-bordered table-condensed">
+    <thead>
+        <tr><th>IP</th>
+            <th>Country</th>
+            <th>Geo</th>
+            <th>Created</th>
+            <th>Score</th>
+            <th>ServiceName</th>
+            <th>ServerName</th>
+            <th>Operation</th>
+        </tr>
+    </thead>
+    <tbody>
+        @Html.Partial("_BannedClientRow", (ViewBag.Bans as List<BannedHistoryTest.Models.BannedClientHistoryViewModel>))
+    </tbody>
+</table>
+<div id="loading">
+    <img src='@Url.Content("~/images/spin.gif")' /><p><b>Loading the next @ViewBag.RecordsPerPage&hellip;</b></p>
+</div>
+@section scripts{
+    <script src="~/Scripts/infiniteScroll.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("div#loading").hide();
+        });
+        var moreRowsUrl = "/Home/GetBans"; //the URL to your ActionMethod
+        //var moreRowsUrl = ' Url.RouteUrl("CustomerList")'; //if you have a route defined, you can use an Html helper like Url.RouteUrl
+        $(window).scroll(scrollHandler);
+    </script>
+}

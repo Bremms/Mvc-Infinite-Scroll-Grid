@@ -1,0 +1,16 @@
+﻿@model List<BannedHistoryTest.Models.BannedClientHistoryViewModel>
+
+@foreach (var client in Model)
+{
+    <tr>
+        <td>@client.Ip</td>
+        <td>@client.Country</td>
+        <td>@client.Geo</td>
+        <td>@client.Created</td>
+        <td>@client.Score</td>
+        <td>@client.ServiceName</td>
+        <td>@client.ServerName</td>
+        <td>@client.Operation</td>
+
+    </tr>
+}
